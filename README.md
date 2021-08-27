@@ -164,8 +164,11 @@ This follows the [OAuth 2.0 Token Revocation Specification](https://datatracker.
 | `token`           | string * | The token the client wants to revoke                                                                        |
 | `token_type_hint` | string * | A hint about the type of the token submitted for revocation. For now, the value MUST be `access_token` only |
 
-#### Response
-`status: 200`
+#### Response Payload
+| property     | type   | description          |
+| ------------ | ------ | -------------------- |
+| `status`     | string | the HTTP status      |
+| `statusCode` | number | the HTTP status code |
 
 ## Utility Endpoints
 
@@ -173,9 +176,11 @@ This follows the [OAuth 2.0 Token Revocation Specification](https://datatracker.
 
 This endpoint is used for health checks
 
-#### Response
-`status: 200`
-
+#### Response Payload
+| property     | type   | description          |
+| ------------ | ------ | -------------------- |
+| `status`     | string | the HTTP status      |
+| `statusCode` | number | the HTTP status code |
 ### `GET /generate-crypto-keys`
 
 This endpoint SHOULD NOT be exposed in production as it SHOULD only be used for debugging purposes.

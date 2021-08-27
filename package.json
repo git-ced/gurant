@@ -14,6 +14,12 @@
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "oauth",
+    "oauth2",
+    "authorization",
+    "authorization-code-grant"
+  ],
   "scripts": {
     "dev": "nodemon",
     "start": "node ./dist/cjs",

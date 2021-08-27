@@ -1,0 +1,12 @@
+mutation UpdateClientByPk(
+  $id: String!,
+  $redirectURI: String,
+) {
+  update_clients_by_pk(
+    pk_columns: {id: $id},
+    _set: {redirect_uri: $redirectURI}
+  ) {
+    id
+    redirect_uri
+  }
+}

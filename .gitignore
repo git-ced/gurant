@@ -109,4 +109,4 @@ dist
 .env.prod
 
 # Project specific
-src/graphql/types
+src/graphql/types.ts

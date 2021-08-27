@@ -22,9 +22,9 @@
   ],
   "scripts": {
     "dev": "nodemon",
-    "start": "node ./dist/cjs",
-    "prepublish": "pridepack build",
-    "build": "pridepack build",
+    "start": "yarn build && node ./dist/cjs",
+    "prepublish": "yarn build",
+    "build": "yarn graphql:generate && pridepack build",
     "type-check": "pridepack check",
     "lint": "pridepack lint",
     "test": "pridepack test --passWithNoTests",

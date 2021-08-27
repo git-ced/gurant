@@ -6,7 +6,7 @@ Additionally, it also has a built-in authentication using [Firebase](https://fir
 
 Lastly, this project uses [Hasura](https://hasura.io/)'s GrahpQL Engine for handling database and GraphQL communication. That would mean that this is database agnostic as long as Hasura supports it.
  
-## Environment Variables
+# Environment Variables
 
 ```bash
 CRYPTO_SECRET_KEY=
@@ -23,7 +23,9 @@ JWT_PUBLIC_KEY=
 JWT_PRIVATE_KEY=
 ```
 
-## Endpoints
+# Endpoints
+
+## Resource Owner Endpoints
 
 ### `GET /user`
 
@@ -77,6 +79,8 @@ Update the specified client's redirect endpoint, requires Firebase `token` for a
 | `id`           | string | the updated client's [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2)    |
 | `redirect_uri` | string | the new [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) for the client |
 
+## OAuth 2.0 Endpoints
+
 ### `GET /oauth2/authorize`
 
 Retrieve the authrization code after the authorization grant, requires [client authentication](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2.1) (HTTP Basic Auth).
@@ -102,6 +106,8 @@ The response is the redirect url injected with the parameters below
 
 This endpoint is responsible for generating tokens using the previously generated authorization [`code`](https://datatracker.ietf.org/doc/html/rfc6749#section-1.3.1).
 This also requires [client authentication](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2.1) (HTTP Basic Auth).
+
+The generated access and refresh tokens comply with the [JSON Web Token (JWT) Specification](https://datatracker.ietf.org/doc/html/rfc7519).
 
 #### `Request Parameter`
 
@@ -160,3 +166,46 @@ This follows the [OAuth 2.0 Token Revocation Specification](https://datatracker.
 
 #### Response
 `status: 200`
+
+## Utility Endpoints
+
+### `GET /health`
+
+This endpoint is used for health checks
+
+#### Response
+`status: 200`
+
+### `GET /health`
+
+This endpoint is used for health checks.
+
+#### Response
+`status: 200`
+
+### `GET /generate-jwt-token`
+
+This endpoint SHOULD NOT be exposed in production as it SHOULD only be used for debugging purposes.
+Generates a `public` and `private` signed with the [secp256r1 elliptic curve](https://datatracker.ietf.org/doc/html/rfc8422#section-5.1.1).
+
+#### Response Payload
+| property      | type   | description                                                                      |
+| ------------- | ------ | -------------------------------------------------------------------------------- |
+| `public_key`  | string | the public key in a [PEM format](https://datatracker.ietf.org/doc/html/rfc1421)  |
+| `private_key` | string | the private key in a [PEM format](https://datatracker.ietf.org/doc/html/rfc1421) |
+
+### `GET /verify-token`
+
+This endpoint SHOULD NOT be exposed in production as it SHOULD only be used for debugging purposes.
+Verifies and decodes a given [JSON Web Token (JWT)](https://datatracker.ietf.org/doc/html/rfc7519).
+
+#### Request Parameters
+| property          | type     | description                                                              |
+| ----------------- | -------- | ------------------------------------------------------------------------ |
+| `token`           | string * | the token to be verified and decoded                                     |
+| `token_type_hint` | string * | the token's type, value could eiher be `access_token` or `refresh_token` |
+
+#### Response Payload
+| property  | type   | description                    |
+| --------- | ------ | ------------------------------ |
+| `decoded` | object | the value of the decoded token |

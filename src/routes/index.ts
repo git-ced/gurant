@@ -1,10 +1,32 @@
+// ANCHOR Crypto
+import { randomBytes } from 'crypto';
+
+// ANCHOR Server
 import SERVER from '../server';
+
+// ANCHOR Utils
 import { parseClientCredentials } from '../utils/encryption';
 import { verifyAccessToken, verifyRefreshToken } from '../utils/jwt';
 
 SERVER.route({
   method: 'GET',
-  url: '/generate-jwt-token',
+  url: '/generate-crypto-keys',
+  handler: async (_, res) => {
+    const secret_key = randomBytes(16).toString('hex');
+    const initialization_vector = randomBytes(8).toString('hex');
+
+    return res.code(200)
+      .type('application/json; charset=utf-8')
+      .send({
+        secret_key,
+        initialization_vector,
+      });
+  },
+});
+
+SERVER.route({
+  method: 'GET',
+  url: '/generate-jwt-keys',
   handler: async (_, res) => res.code(200)
     .type('application/json; charset=utf-8')
     .send({}),

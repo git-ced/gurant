@@ -176,14 +176,18 @@ This endpoint is used for health checks
 #### Response
 `status: 200`
 
-### `GET /health`
+### `GET /generate-crypto-keys`
 
-This endpoint is used for health checks.
+This endpoint SHOULD NOT be exposed in production as it SHOULD only be used for debugging purposes.
+Generates a `secret_key` and an `initialization vector`.
 
-#### Response
-`status: 200`
+#### Response Payload
+| property                | type   | description                                                     |
+| ----------------------- | ------ | --------------------------------------------------------------- |
+| `secret_key`            | string | the raw key used by the algorithm and the initialization vector |
+| `initialization_vector` | string | a cryptographically random 16 byte string                       |
 
-### `GET /generate-jwt-token`
+### `GET /generate-jwt-keys`
 
 This endpoint SHOULD NOT be exposed in production as it SHOULD only be used for debugging purposes.
 Generates a `public` and `private` signed with the [secp256r1 elliptic curve](https://datatracker.ietf.org/doc/html/rfc8422#section-5.1.1).

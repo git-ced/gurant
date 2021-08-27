@@ -1,0 +1,22 @@
+query GetOauthAuthCodeByClientUser(
+  $clientId: String!,
+  $userId: String!,
+) {
+  authCodes: oauth_authorization_codes(
+    where: {
+      client_id: {_eq: $clientId},
+      user_id: {_eq: $userId}
+    }
+  ) {
+    id
+    created_at
+    updated_at
+    user_id
+    client_id
+    expires_in
+    state
+    redirect_uri
+    scope
+    is_active
+  }
+}

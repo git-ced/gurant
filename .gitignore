@@ -103,4 +103,10 @@ dist
 # TernJS port file
 .tern-port
 
+# Env file
 .env
+.env.dev
+.env.prod
+
+# Project specific
+src/graphql/types

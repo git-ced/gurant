@@ -1,0 +1,14 @@
+query GetOauthAuthorizationCodeByPk($id: uuid!) {
+  authCode: oauth_authorization_codes_by_pk(id: $id) {
+    id
+    created_at
+    updated_at
+    user_id
+    client_id
+    expires_in
+    state
+    redirect_uri
+    scope
+    is_active
+  }
+}

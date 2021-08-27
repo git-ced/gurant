@@ -1,0 +1,9 @@
+mutation RevokeOauthAccessToken($id: uuid!) {
+  accessToken: update_oauth_access_tokens_by_pk(
+    pk_columns: {id: $id}
+    _set: {is_active: false}
+  ) {
+    id
+    is_active
+  }
+}

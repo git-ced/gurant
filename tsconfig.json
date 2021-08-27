@@ -1,9 +1,17 @@
 {
-  "exclude": ["node_modules"],
-  "include": ["src", "types"],
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src",
+    "types",
+    "src/utils/index.d.ts"
+  ],
   "compilerOptions": {
     "module": "ESNext",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,

@@ -1,6 +1,9 @@
 // ANCHOR Crypto
 import { randomBytes } from 'crypto';
 
+// ANCHOR ECDSA
+import ECDSA from 'ecdsa-secp256r1';
+
 // ANCHOR Server
 import SERVER from '../server';
 
@@ -28,9 +31,17 @@ if (process.env.NODE_ENV === 'development') {
   SERVER.route({
     method: 'GET',
     url: '/generate-jwt-keys',
-    handler: async (_, res) => res.code(200)
-      .type('application/json; charset=utf-8')
-      .send({}),
+    handler: async (_, res) => {
+      const privateKey = ECDSA.generateKey();
+      const publicKey = privateKey.asPublic();
+
+      return res.code(200)
+        .type('application/json; charset=utf-8')
+        .send({
+          public_key: publicKey.toPEM(),
+          private_key: privateKey.toPEM(),
+        });
+    },
   });
 
   interface VerifyTokenQueryInterface {

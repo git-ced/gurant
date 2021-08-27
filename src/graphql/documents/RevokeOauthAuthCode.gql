@@ -1,0 +1,9 @@
+mutation RevokeOauthAuthCode($id: uuid!) {
+  authCode: update_oauth_authorization_codes_by_pk(
+    pk_columns: {id: $id}
+    _set: {is_active: false}
+  ) {
+    id
+    is_active
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "0.1.0",
   "types": "dist/types/index.d.ts",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -27,7 +27,7 @@
     "graphql:generate": "graphql-codegen"
   },
   "license": "MIT",
-  "name": "oauth2-auth-code-grant-server",
+  "name": "gurant",
   "devDependencies": {
     "@graphql-codegen/cli": "^1.19.3",
     "@graphql-codegen/typed-document-node": "^1.18.1",
@@ -64,8 +64,5 @@
     "query-string": "^7.0.1",
     "uuid": "^8.3.2"
   },
-  "private": true,
-  "publishConfig": {
-    "access": "restricted"
-  }
+  "private": false
 }

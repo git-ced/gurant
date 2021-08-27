@@ -1,0 +1,21 @@
+query GetOauthAccessTokenByClientUser(
+  $clientId: String!,
+  $userId: String!,
+) {
+  accessTokens: oauth_access_tokens(
+    where: {
+      client_id: {_eq: $clientId},
+      user_id: {_eq: $userId}
+    }
+  ) {
+    id
+    created_at
+    updated_at
+    user_id
+    client_id
+    expires_in
+    scope
+    token_type
+    is_active
+  }
+}

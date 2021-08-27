@@ -3,7 +3,7 @@ require('dotenv').config();
 module.exports = {
   schema: [
     {
-      'https://oauth-sample.hasura.app/v1/graphql': {
+      'https://gurant.hasura.app/v1/graphql': {
         headers: {
           'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET,
         }

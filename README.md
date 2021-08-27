@@ -126,7 +126,7 @@ The generated access and refresh tokens comply with the [JSON Web Token (JWT) Sp
 | `access_token`  | string | the [access token](https://datatracker.ietf.org/doc/html/rfc6749#section-1.4) used to access protected resources    |
 | `refresh_token` | string | the [refresh token](https://datatracker.ietf.org/doc/html/rfc6749#section-1.5) used to refresh an access token      |
 | `scope`         | string | the [scope](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) of which access is applicable                |
-| `expires_in`    | string | the lifetime in seconds of the access token                                                                         |
+| `expires_in`    | number | the lifetime in seconds of the access token                                                                         |
 | `token_type`    | string | the [type](https://datatracker.ietf.org/doc/html/rfc6749#section-7.1) of the access token, value is always `bearer` |
 
 ### `POST /oauth2/token?grant_type=refresh_token`
@@ -149,7 +149,7 @@ This also requires [client authentication](https://datatracker.ietf.org/doc/html
 | `access_token`  | string | the [access token](https://datatracker.ietf.org/doc/html/rfc6749#section-1.4) used to access protected resources    |
 | `refresh_token` | string | the [refresh token](https://datatracker.ietf.org/doc/html/rfc6749#section-1.5) used to refresh an access token      |
 | `scope`         | string | the [scope](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) of which access is applicable                |
-| `expires_in`    | string | the lifetime in seconds of the access token                                                                         |
+| `expires_in`    | number | the lifetime in seconds of the access token                                                                         |
 | `token_type`    | string | the [type](https://datatracker.ietf.org/doc/html/rfc6749#section-7.1) of the access token, value is always `bearer` |
 
 ### `POST /oauth2/revoke`

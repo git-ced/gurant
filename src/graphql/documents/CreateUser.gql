@@ -1,0 +1,58 @@
+mutation CreateUser(
+  $id: String!,
+  $displayName: String!,
+  $email: String!,
+  $clientIdLive: String!,
+  $clientSecretLive: String!,
+  $clientIdTest: String!,
+  $clientSecretTest: String!,
+  $redirectURI: String,
+) {
+  user: insert_users_one(
+    object: {
+      id: $id,
+      display_name: $displayName,
+      email: $email,
+      client_test: {
+        data: {
+          id: $clientIdTest,
+          is_live: false,
+          redirect_uri: $redirectURI,
+          secret: $clientSecretTest,
+          user_id: $id,
+        },
+      },
+      client_live: {
+        data: {
+          id: $clientIdLive,
+          is_live: true,
+          redirect_uri: $redirectURI,
+          secret: $clientSecretLive,
+          user_id: $id,
+        },
+      },
+    }
+  ) {
+    id
+    created_at
+    updated_at
+    display_name
+    email
+    client_live {
+      id
+      created_at
+      updated_at
+      is_live
+      secret
+      redirect_uri
+    }
+    client_test {
+      id
+      created_at
+      updated_at
+      is_live
+      secret
+      redirect_uri
+    }
+  }
+}

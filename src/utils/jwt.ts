@@ -1,6 +1,6 @@
 // ANCHOR JOSE
 import { JWTPayload, SignJWT } from 'jose/jwt/sign';
-import { jwtVerify } from 'jose/jwt/verify'
+import { jwtVerify, JWTVerifyResult } from 'jose/jwt/verify';
 
 // ANCHOR Crypto
 import { createPublicKey, createPrivateKey } from 'crypto';
@@ -9,7 +9,6 @@ const JWT_PUBLIC_KEY = (process.env.JWT_PUBLIC_KEY ?? '')
   .replace(/\\n/gm, '\n');
 const JWT_PRIVATE_KEY = (process.env.JWT_PRIVATE_KEY ?? '')
   .replace(/\\n/gm, '\n');
-const SAMPLE_CLIENT_ID = process.env.SAMPLE_CLIENT_ID ?? '';
 
 const publicKey = createPublicKey({
   key: JWT_PUBLIC_KEY,
@@ -25,39 +24,30 @@ const privateKey = createPrivateKey({
 
 export const signAccessToken = async (
   payload: JWTPayload,
-) => {
-  return new SignJWT(payload)
-    .setProtectedHeader({ alg: 'ES256' })
-    .setIssuedAt()
-    .setIssuer(SAMPLE_CLIENT_ID)
-    .setExpirationTime('1h')
-    .sign(privateKey)
-}
+): Promise<string> => new SignJWT(payload)
+  .setProtectedHeader({ alg: 'ES256' })
+  .setIssuedAt()
+  .setExpirationTime('1h')
+  .sign(privateKey);
 
 export const signRefreshToken = async (
   payload: JWTPayload,
-) => {
-  return new SignJWT(payload)
-    .setProtectedHeader({ alg: 'ES256' })
-    .setIssuedAt()
-    .setIssuer(SAMPLE_CLIENT_ID)
-    .sign(privateKey)
-}
+): Promise<string> => new SignJWT(payload)
+  .setProtectedHeader({ alg: 'ES256' })
+  .setIssuedAt()
+  .sign(privateKey);
 
 export const verifyAccessToken = async (
   jwt: string,
-) => {
-  return jwtVerify(jwt, publicKey, {
-    issuer: SAMPLE_CLIENT_ID,
-    maxTokenAge: '1h',
-  })
-}
+  issuer: string,
+): Promise<JWTVerifyResult> => jwtVerify(jwt, publicKey, {
+  issuer,
+  maxTokenAge: '1h',
+});
 
 export const verifyRefreshToken = async (
   jwt: string,
-) => {
-  return jwtVerify(jwt, publicKey, {
-    issuer: SAMPLE_CLIENT_ID,
-  })
-}
-
+  issuer: string,
+): Promise<JWTVerifyResult> => jwtVerify(jwt, publicKey, {
+  issuer,
+});

@@ -1,0 +1,25 @@
+query GetUserByPk($id: String!) {
+  user: users_by_pk(id: $id) {
+    id
+    created_at
+    updated_at
+    display_name
+    email
+    client_live {
+      id
+      created_at
+      updated_at
+      is_live
+      secret
+      redirect_uri
+    }
+    client_test {
+      id
+      created_at
+      updated_at
+      is_live
+      secret
+      redirect_uri
+    }
+  }
+}

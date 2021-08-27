@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": [
+    "lxsmnsyc/typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.eslint.json"
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-floating-promises": "off"
+  }
+}

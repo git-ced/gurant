@@ -20,6 +20,8 @@ JWT_PUBLIC_KEY=
 JWT_PRIVATE_KEY=
 ```
 
+Change the GraphQL Endpoint (`https://gurant.hasura.app/v1/graphql`) in the `codegen.config.js` to the GraphQL Endpoint of your Hasura Project.
+
 # Endpoints
 
 ## Resource Owner Endpoints

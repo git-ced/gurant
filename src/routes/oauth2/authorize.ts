@@ -21,25 +21,57 @@ SERVER.route({
 
     if (firebaseUser) {
       if (query.response_type === 'code') {
-        const { CLIENT } = await import('../../utils/graphql');
+        if (query.client_id && query.redirect_uri) {
+          const { CLIENT } = await import('../../utils/graphql');
 
-        const id = uuidv5(String(Date.now()), uuidv4());
+          const { client } = await CLIENT.GetClientByPk({
+            id: query.client_id,
+          });
 
-        const { code } = await CLIENT.CreateOauthAuthCode({
-          id,
-          createdAt: new Date().toISOString(),
-          userId: firebaseUser.uid,
-          clientId: query.client_id,
-          expiresIn: 601,
-          state: query.state,
-          redirectUri: query.redirect_uri,
-          scope: `{${query.scope}}`,
-        });
+          if (client && client.redirect_uri === query.redirect_uri) {
+            const id = uuidv5(String(Date.now()), uuidv4());
 
-        if (code) {
+            const { code } = await CLIENT.CreateOauthAuthCode({
+              id,
+              createdAt: new Date().toISOString(),
+              userId: firebaseUser.uid,
+              clientId: query.client_id,
+              expiresIn: 601,
+              state: query.state,
+              redirectUri: query.redirect_uri,
+              scope: `{${query.scope}}`,
+            });
+
+            if (code) {
+              const redirectURI = composeRedirectURI(
+                query.redirect_uri, {
+                  code: encrypt(code.id),
+                  state: query.state,
+                },
+              );
+
+              return res.code(200)
+                .type('application/json; charset=utf-8')
+                .send(redirectURI);
+            }
+
+            const redirectURI = composeRedirectURI(
+              query.redirect_uri, {
+                error: 'invalid_request',
+                error_description: 'The server cannot process the request payload.',
+                state: query.state,
+              },
+            );
+
+            return res.code(200)
+              .type('application/json; charset=utf-8')
+              .send(redirectURI);
+          }
+
           const redirectURI = composeRedirectURI(
             query.redirect_uri, {
-              code: encrypt(code.id),
+              error: 'invalid_request',
+              error_description: 'The redirect URI doesn\'t match the client\'s specified redirect URI',
               state: query.state,
             },
           );
@@ -52,7 +84,7 @@ SERVER.route({
         const redirectURI = composeRedirectURI(
           query.redirect_uri, {
             error: 'invalid_request',
-            error_description: 'The server cannot process the request payload.',
+            error_description: 'The request is missing a required parameter',
             state: query.state,
           },
         );
@@ -65,7 +97,7 @@ SERVER.route({
       const redirectURI = composeRedirectURI(
         query.redirect_uri, {
           error: 'unsupported_response_type',
-          error_description: 'he authorization server does not support obtaining an authorization code using this method',
+          error_description: 'The authorization server does not support obtaining an authorization code using this method',
           state: query.state,
         },
       );

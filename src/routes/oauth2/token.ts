@@ -94,7 +94,7 @@ SERVER.route({
                     if (accessToken) {
                       if (currentToken.accessTokens.length) {
                         await CLIENT.DeleteOauthAccessTokenByPk({
-                          id: currentToken.accessTokens[0],
+                          id: currentToken.accessTokens[0].id,
                         });
                       }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // ANCHOR UUID
 import {
   v4 as uuidv4,
@@ -48,9 +49,10 @@ SERVER.route({
             });
 
             if (code) {
+              res.log.info(currentCode.authCodes);
               if (currentCode.authCodes.length) {
                 await CLIENT.DeleteOauthAccessTokenByPk({
-                  id: currentCode.authCodes[0],
+                  id: currentCode.authCodes[0].id,
                 });
               }
 

@@ -14,37 +14,49 @@ SERVER.route({
     if (credentials) {
       const query = req.query as RevokeQueryInterface;
 
-      if (query.token_type_hint === 'access_token') {
-        try {
-          const decodedAccessToken = await verifyAccessToken(
-            query.token,
-            credentials.client_id,
-          );
+      if (query.token) {
+        if (query.token_type_hint === 'access_token') {
+          try {
+            const decodedAccessToken = await verifyAccessToken(
+              query.token,
+              credentials.client_id,
+            );
 
-          const { CLIENT } = await import('../../utils/graphql');
+            const { CLIENT } = await import('../../utils/graphql');
 
-          await CLIENT.RevokeOauthAccessToken({
-            id: decodedAccessToken.payload.jti,
-          });
-
-          res.code(200)
-            .type('application/json; charset=utf-8')
-            .send({});
-        } catch {
-          return res.code(400)
-            .type('application/json; charset=utf-8')
-            .send({
-              error: 'invalid_grant',
-              error_description: 'The provided access token is invalid or already expired',
+            await CLIENT.RevokeOauthAccessToken({
+              id: decodedAccessToken.payload.jti,
             });
+
+            res.code(200)
+              .type('application/json; charset=utf-8')
+              .send({
+                status: 'ok',
+                statusCode: 200,
+              });
+          } catch {
+            return res.code(400)
+              .type('application/json; charset=utf-8')
+              .send({
+                error: 'invalid_grant',
+                error_description: 'The provided access token is invalid or already expired',
+              });
+          }
         }
+
+        return res.code(400)
+          .type('application/json; charset=utf-8')
+          .send({
+            error: 'unsupported_token_type',
+            error_description: 'The authorization server does not support the revocation of the presented token type.',
+          });
       }
 
       return res.code(400)
         .type('application/json; charset=utf-8')
         .send({
-          error: 'unsupported_token_type',
-          error_description: 'The authorization server does not support the revocation of the presented token type.',
+          error: 'invalid_request',
+          error_description: 'The request is missing the `token` parameter',
         });
     }
 

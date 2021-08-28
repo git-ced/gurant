@@ -22,3 +22,9 @@ export interface AuthorizationQueryInterface {
   redirect_uri: string;
   scope: string;
 }
+
+// SECTION: OAuth 2.0 Revoke Endpoints
+export interface RevokeQueryInterface {
+  token: string;
+  token_type_hint: string;
+}

@@ -1,0 +1,10 @@
+query GetClientByPk($id: String!) {
+  client: clients_by_pk(id: $id) {
+    id
+    created_at
+    updated_at
+    is_live
+    secret
+    redirect_uri
+  }
+}

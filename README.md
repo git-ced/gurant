@@ -74,7 +74,7 @@ Register clients after the user has been registed. Requires the user's Firebase 
 | `client_live_id` | string    | the resource owner's live [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |
 | `client_test_id` | string    | the resource owner's test [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |
 
-### `PUT /user/client/:client_id`
+### `PUT /user/clients/:client_id`
 
 Update the specified client's redirect endpoint, requires Firebase `token` for authorization.
 

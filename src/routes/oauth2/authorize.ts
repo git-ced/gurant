@@ -50,7 +50,7 @@ SERVER.route({
 
             if (code) {
               if (currentCode.authCodes.length) {
-                await CLIENT.DeleteOauthAccessTokenByPk({
+                await CLIENT.DeleteOauthAuthCodeByPk({
                   id: currentCode.authCodes[0].id,
                 });
               }

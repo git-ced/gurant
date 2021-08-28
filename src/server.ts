@@ -9,6 +9,7 @@ import fastifyFormBody from 'fastify-formbody';
 
 const SERVER = fastify({
   logger: true,
+  maxParamLength: 120,
 });
 
 // Helmet

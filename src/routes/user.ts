@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // ANCHOR UUID
 import {
   v4 as uuidv4,

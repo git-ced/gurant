@@ -1,10 +1,10 @@
 # gurant
 
-Gurant is an OAuth 2.0 Provider, it is an authorization framework based on the [OAuth 2.0 Specification](https://datatracker.ietf.org/doc/html/rfc6749).
+Gurant is an OAuth 2.0 provider built with Typescript/NodeJS. It is an authorization framework based on the [OAuth 2.0 Specification](https://datatracker.ietf.org/doc/html/rfc6749).
 
-Additionally, it also has a built-in authentication using [Firebase](https://firebase.google.com/products/auth). Currently, its authentication is opinionated and will only support Firebase.
+Additionally, it also has a built-in authentication using [Firebase](https://firebase.google.com/products/auth). Currently, it is opinionated and will only support Firebase.
 
-Lastly, this project uses [Hasura](https://hasura.io/)'s GrahpQL Engine for handling database and GraphQL communication. That would mean that this is database agnostic as long as Hasura supports it.
+Lastly, this project uses [Hasura](https://hasura.io/)'s GrahpQL Engine for handling database queries and mutations. That would also mean that Gurant is database agnostic as long as Hasura supports it.
  
 # Environment Variables
 
@@ -28,7 +28,7 @@ JWT_PRIVATE_KEY=
 
 Fetches the resource owner's profile details.
 
-#### `Response Payload`
+#### Response Payload
 
 | property       | type      | description                            |
 | -------------- | --------- | -------------------------------------- |
@@ -40,7 +40,7 @@ Fetches the resource owner's profile details.
 | `client_live`  | object    | refer to the table below               |
 | `client_test`  | object    | refer to the table below               |
 
-#### `Client Object`
+#### Client Object
 | property       | type      | description                                                                                  |
 | -------------- | --------- | -------------------------------------------------------------------------------------------- |
 | `id`           | string    | the [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2)           |
@@ -54,12 +54,12 @@ Fetches the resource owner's profile details.
 
 Register clients after the user has been registed. Requires the user's Firebase `token` to their info.
 
-#### `Request Payload`
+#### Request Payload
 | property       | type   | description                                                                                        |
 | -------------- | ------ | -------------------------------------------------------------------------------------------------- |
 | `redirect_uri` | string | the user specified [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |
 
-#### `Response Payload`
+#### Response Payload
 
 | property         | type      | description                                                                                              |
 | ---------------- | --------- | -------------------------------------------------------------------------------------------------------- |
@@ -75,12 +75,12 @@ Register clients after the user has been registed. Requires the user's Firebase 
 
 Update the specified client's redirect endpoint, requires Firebase `token` for authorization.
 
-#### `Request Payload`
+#### Request Payload
 | property       | type     | description                                                                                            |
 | -------------- | -------- | ------------------------------------------------------------------------------------------------------ |
 | `redirect_uri` | string * | The new [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) for the client |
 
-#### `Response Payload`
+#### Response Payload
 | property       | type   | description                                                                                            |
 | -------------- | ------ | ------------------------------------------------------------------------------------------------------ |
 | `id`           | string | the updated client's [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2)    |
@@ -92,7 +92,7 @@ Update the specified client's redirect endpoint, requires Firebase `token` for a
 
 Retrieve the authrization code after the authorization grant, requires Firebase `token` authorization.
 
-#### `Request Parameters`
+#### Request Parameters
 | property        | type     | description                                                                                                            |
 | --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |
 | `response_type` | string * | value MUST be [`code`](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1)                                    |
@@ -101,7 +101,7 @@ Retrieve the authrization code after the authorization grant, requires Firebase 
 | `scope`         | string * | the [scope](https://datatracker.ietf.org/doc/html/rfc6749#section-3.3) of which the authorization is applicable        |
 | `state`         | string   | additional [state](https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1) to be passed, could be user info       |
 
-#### `Response Parameters`
+#### Response Parameters
 
 The response is the redirect url injected with the parameters below
 | property | type   | description                                                                                                                        |
@@ -116,7 +116,7 @@ This also requires [client authentication](https://datatracker.ietf.org/doc/html
 
 The generated access and refresh tokens comply with the [JSON Web Token (JWT) Specification](https://datatracker.ietf.org/doc/html/rfc7519).
 
-#### `Request Parameter`
+#### Request Parameter
 
 | property       | type     | description                                                                                                                    |
 | -------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------ |
@@ -126,7 +126,7 @@ The generated access and refresh tokens comply with the [JSON Web Token (JWT) Sp
 | `client_id`    | string * | the registered client's [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2)                         |
 
 
-#### `Response Payload`
+#### Response Payload
 
 | property        | type   | description                                                                                                         |
 | --------------- | ------ | ------------------------------------------------------------------------------------------------------------------- |
@@ -141,7 +141,7 @@ The generated access and refresh tokens comply with the [JSON Web Token (JWT) Sp
 This endpoint is responsible for generating tokens using a [`refresh_token`](https://datatracker.ietf.org/doc/html/rfc6749#section-1.5).
 This also requires [client authentication](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2.1) (HTTP Basic Auth).
 
-#### `Request Parameter`
+#### Request Parameter
 
 | property        | type     | description                                                                                                    |
 | --------------- | -------- | -------------------------------------------------------------------------------------------------------------- |
@@ -149,7 +149,7 @@ This also requires [client authentication](https://datatracker.ietf.org/doc/html
 | `refresh_token` | string * | the [refresh token](https://datatracker.ietf.org/doc/html/rfc6749#section-1.5) used to refresh an access token |
 
 
-#### `Response Payload`
+#### Response Payload
 
 | property        | type   | description                                                                                                         |
 | --------------- | ------ | ------------------------------------------------------------------------------------------------------------------- |
@@ -164,7 +164,7 @@ This also requires [client authentication](https://datatracker.ietf.org/doc/html
 Revoke an access token, requires [client authentication](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2.1) (HTTP Basic Auth).
 This follows the [OAuth 2.0 Token Revocation Specification](https://datatracker.ietf.org/doc/html/rfc7009)
 
-#### `Request Parameter`
+#### Request Parameter
 
 | property          | type     | description                                                                                                 |
 | ----------------- | -------- | ----------------------------------------------------------------------------------------------------------- |

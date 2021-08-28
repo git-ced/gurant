@@ -14,11 +14,3 @@ export const firebaseAdmin = admin.initializeApp(CREDENTIALS);
 
 export const firebaseAuth = firebaseAdmin.auth();
 export const firebaseFirestore = firebaseAdmin.firestore();
-
-export const getUserIdFromToken = async (
-  token: string
-): Promise<string> => {
-  const decodedToken = await firebaseAuth.verifyIdToken(token)
-
-  return decodedToken.uid;
-}

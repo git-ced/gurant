@@ -8,8 +8,12 @@ import ECDSA from 'ecdsa-secp256r1';
 import SERVER from '../server';
 
 // ANCHOR Utils
-import { parseClientCredentials } from '../utils/encryption';
-import { verifyAccessToken, verifyRefreshToken } from '../utils/jwt';
+import { parseClientCredentials } from '../functions/auth';
+import {
+  verifyAccessToken,
+  verifyRefreshToken,
+} from '../functions/jwt';
+import { VerifyTokenQueryInterface } from '../utils/types';
 
 if (process.env.NODE_ENV === 'development') {
   SERVER.route({
@@ -43,11 +47,6 @@ if (process.env.NODE_ENV === 'development') {
         });
     },
   });
-
-  interface VerifyTokenQueryInterface {
-    token: string;
-    token_type_hint: 'access_token' | 'refresh_token';
-  }
 
   SERVER.route({
     method: 'GET',

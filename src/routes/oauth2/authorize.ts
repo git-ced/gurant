@@ -49,7 +49,6 @@ SERVER.route({
             });
 
             if (code) {
-              res.log.info(currentCode.authCodes);
               if (currentCode.authCodes.length) {
                 await CLIENT.DeleteOauthAccessTokenByPk({
                   id: currentCode.authCodes[0].id,

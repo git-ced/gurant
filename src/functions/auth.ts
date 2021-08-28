@@ -54,12 +54,17 @@ export const parseClientCredentials = (
   };
 };
 
-export const getUserFromToken = async (
-  token: string,
-): Promise<auth.UserRecord> => {
-  const decodedToken = await firebaseAuth.verifyIdToken(token);
+export const getUserFromAuthorization = async (
+  authorization?: string,
+): Promise<auth.UserRecord | null> => {
+  if (!authorization || !authorization.includes('Bearer ')) {
+    return null;
+  }
 
-  const userId = decodedToken.uid;
+  const bearerToken = authorization.replace('Bearer ', '');
+  const decodedIDToken = await firebaseAuth.verifyIdToken(bearerToken);
+
+  const userId = decodedIDToken.uid;
 
   const user = await firebaseAuth.getUser(userId);
 

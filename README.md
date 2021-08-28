@@ -33,15 +33,25 @@ Fetches the resource owner's profile details.
 
 #### `Response Payload`
 
-| property         | type      | description                                                                                              |
-| ---------------- | --------- | -------------------------------------------------------------------------------------------------------- |
-| `id`             | string    | the resource owner's identifier                                                                          |
-| `created_at`     | timestamp | timestamp when the resource is created                                                                   |
-| `updated_at`     | timestamp | timestamp when the resource is updated                                                                   |
-| `display_name`   | string    | the resource owner's display name                                                                        |
-| `email`          | string    | the resource owner's email                                                                               |
-| `client_live_id` | string    | the resource owner's live [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |
-| `client_test_id` | string    | the resource owner's test [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2) |
+| property       | type      | description                            |
+| -------------- | --------- | -------------------------------------- |
+| `id`           | string    | the resource owner's identifier        |
+| `created_at`   | timestamp | timestamp when the resource is created |
+| `updated_at`   | timestamp | timestamp when the resource is updated |
+| `display_name` | string    | the resource owner's display name      |
+| `email`        | string    | the resource owner's email             |
+| `client_live`  | object    | refer to the table below               |
+| `client_test`  | object    | refer to the table below               |
+
+#### `Client Object`
+| property       | type      | description                                                                                  |
+| -------------- | --------- | -------------------------------------------------------------------------------------------- |
+| `id`           | string    | the [client identifier](https://datatracker.ietf.org/doc/html/rfc6749#section-2.2)           |
+| `created_at`   | timestamp | timestamp when the resource is created                                                       |
+| `updated_at`   | timestamp | timestamp when the resource is updated                                                       |
+| `secret`       | string    | the [client secret](https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1)             |
+| `is_live`      | boolean   | determines whether the credentias is for a live or test enviroment                           |
+| `redirect_uri` | string    | the client's [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |
 
 ### `POST /user`
 
@@ -50,7 +60,7 @@ Register clients after the user has been registed. Requires the user's Firebase 
 #### `Request Payload`
 | property       | type   | description                                                                                        |
 | -------------- | ------ | -------------------------------------------------------------------------------------------------- |
-| `redirect_uri` | string | The user specified [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |
+| `redirect_uri` | string | the user specified [redirect enpoint](https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2) |
 
 #### `Response Payload`
 

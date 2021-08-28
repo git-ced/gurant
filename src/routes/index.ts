@@ -15,6 +15,10 @@ import {
 } from '../functions/jwt';
 import { VerifyTokenQueryInterface } from '../utils/types';
 
+// ANCHOR Routes
+import './user';
+import './oauth2';
+
 if (process.env.NODE_ENV === 'development') {
   SERVER.route({
     method: 'GET',

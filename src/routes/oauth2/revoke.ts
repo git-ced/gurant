@@ -28,7 +28,7 @@ SERVER.route({
               id: decodedAccessToken.payload.jti,
             });
 
-            if (accessToken?.access_token === query.token) {
+            if (accessToken?.is_active && accessToken.access_token === query.token) {
               await CLIENT.RevokeOauthAccessToken({
                 id: decodedAccessToken.payload.jti,
               });

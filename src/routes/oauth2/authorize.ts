@@ -29,6 +29,11 @@ SERVER.route({
           });
 
           if (client && client.redirect_uri === query.redirect_uri) {
+            const currentCode = await CLIENT.GetOauthAuthCodeByClientUser({
+              clientId: query.client_id,
+              userId: firebaseUser.uid,
+            });
+
             const id = uuidv5(String(Date.now()), uuidv4());
 
             const { code } = await CLIENT.CreateOauthAuthCode({
@@ -43,6 +48,12 @@ SERVER.route({
             });
 
             if (code) {
+              if (currentCode.authCodes.length) {
+                await CLIENT.DeleteOauthAccessTokenByPk({
+                  id: currentCode.authCodes[0],
+                });
+              }
+
               const redirectURI = composeRedirectURI(
                 query.redirect_uri, {
                   code: encrypt(code.id),

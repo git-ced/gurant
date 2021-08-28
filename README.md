@@ -95,6 +95,8 @@ Update the specified client's redirect endpoint, requires Firebase `token` for a
 
 Retrieve the authrization code after the authorization grant, requires [client authentication](https://datatracker.ietf.org/doc/html/rfc6749#section-3.2.1) (HTTP Basic Auth).
 
+Additionally, the client is required to pass the user's Firebase `token` in the headers as `user-token`.
+
 #### `Request Parameters`
 | property        | type     | description                                                                                                            |
 | --------------- | -------- | ---------------------------------------------------------------------------------------------------------------------- |

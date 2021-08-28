@@ -1,0 +1,15 @@
+mutation DeleteOauthAccessTokenByPk($id: uuid!) {
+  accessToken: delete_oauth_access_tokens_by_pk(id: $id) {
+    id
+    created_at
+    updated_at
+    user_id
+    client_id
+    expires_in
+    scope
+    token_type
+    is_active
+    access_token
+    refresh_token
+  }
+}

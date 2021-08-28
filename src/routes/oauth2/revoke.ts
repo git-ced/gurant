@@ -40,6 +40,13 @@ SERVER.route({
                   statusCode: 200,
                 });
             }
+
+            return res.code(400)
+              .type('application/json; charset=utf-8')
+              .send({
+                error: 'invalid_grant',
+                error_description: 'The provided access token is invalid or already expired',
+              });
           } catch {
             return res.code(400)
               .type('application/json; charset=utf-8')

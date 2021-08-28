@@ -5,7 +5,3 @@ export const stringToBase64 = (text: string): string => (
 export const base64ToString = (base64: string): string => (
   Buffer.from(base64, 'base64').toString()
 );
-
-export function parseRequestBody<T>(body: unknown): T {
-  return JSON.parse(body as string) as T;
-}

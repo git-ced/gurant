@@ -9,7 +9,6 @@ import SERVER from '../server';
 
 import { CreateUserPayloadInterface, UpdateClientParamsInterface } from '../utils/types';
 import { getUserFromAuthorization } from '../functions/auth';
-import { parseRequestBody } from '../functions/convert';
 import { encrypt } from '../functions/encryption';
 
 SERVER.route({
@@ -48,7 +47,7 @@ SERVER.route({
     const firebaseUser = await getUserFromAuthorization(req.headers.authorization);
 
     if (firebaseUser && firebaseUser.email) {
-      const body = parseRequestBody<CreateUserPayloadInterface>(req.body);
+      const body = req.body as CreateUserPayloadInterface;
 
       const clientIdLive = uuidv5(String(Date.now()), uuidv4());
       const clientSecretLive = uuidv5(firebaseUser.uid, clientIdLive);
@@ -91,7 +90,7 @@ SERVER.route({
     const firebaseUser = await getUserFromAuthorization(req.headers.authorization);
 
     if (firebaseUser) {
-      const body = parseRequestBody<CreateUserPayloadInterface>(req.body);
+      const body = req.body as CreateUserPayloadInterface;
       const params = req.params as UpdateClientParamsInterface;
 
       const { CLIENT } = await import('../utils/graphql');

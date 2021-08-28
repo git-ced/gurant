@@ -72,7 +72,7 @@ if (process.env.NODE_ENV === 'development') {
             id: decodedToken.payload.jti,
           });
 
-          if (accessToken?.is_active) {
+          if (accessToken?.is_active && accessToken.access_token === query.token) {
             return res.code(200)
               .type('application/json; charset=utf-8')
               .send({ decodedToken });
@@ -98,7 +98,7 @@ if (process.env.NODE_ENV === 'development') {
             id: decodedToken.payload.jti,
           });
 
-          if (accessToken?.is_active) {
+          if (accessToken?.refresh_token === query.token) {
             return res.code(200)
               .type('application/json; charset=utf-8')
               .send({ decodedToken });

@@ -172,6 +172,7 @@ SERVER.route({
             const generatedAccessToken = await signAccessToken({
               sub: accessToken.user_id,
               jti: accessToken.id,
+              iss: credentials.client_id,
             });
 
             const { accessToken: newAccessToken } = await CLIENT.CreateOauthAccessToken({

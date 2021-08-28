@@ -7,7 +7,7 @@ import { RevokeQueryInterface } from '../../utils/types';
 
 SERVER.route({
   method: 'POST',
-  url: '/revoke',
+  url: '/oauth2/revoke',
   handler: async (req, res) => {
     const credentials = parseClientCredentials(req.headers.authorization);
 

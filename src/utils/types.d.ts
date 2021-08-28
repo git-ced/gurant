@@ -23,6 +23,14 @@ export interface AuthorizationQueryInterface {
   scope: string;
 }
 
+// SECTION: OAuth 2.0 Token Endpoints
+export interface TokenQueryInterface {
+  grant_type: string;
+  code: string;
+  redirect_uri: string;
+  refresh_token: string;
+}
+
 // SECTION: OAuth 2.0 Revoke Endpoints
 export interface RevokeQueryInterface {
   token: string;

@@ -63,23 +63,53 @@ if (process.env.NODE_ENV === 'development') {
         if (query.token_type_hint === 'access_token') {
           const decodedToken = await verifyAccessToken(
             query.token,
-            '',
+            credentials.client_id,
           );
 
-          return res.code(200)
+          const { CLIENT } = await import('../utils/graphql');
+
+          const { accessToken } = await CLIENT.GetOauthAccessTokenByPk({
+            id: decodedToken.payload.jti,
+          });
+
+          if (accessToken?.is_active) {
+            return res.code(200)
+              .type('application/json; charset=utf-8')
+              .send({ decodedToken });
+          }
+
+          return res.code(400)
             .type('application/json; charset=utf-8')
-            .send({ decodedToken });
+            .send({
+              error: 'invalid_grant',
+              error_description: 'The given token is either invalid, expired, or revoked',
+            });
         }
 
         if (query.token_type_hint === 'refresh_token') {
           const decodedToken = await verifyRefreshToken(
             query.token,
-            '',
+            credentials.client_id,
           );
 
-          return res.code(200)
+          const { CLIENT } = await import('../utils/graphql');
+
+          const { accessToken } = await CLIENT.GetOauthAccessTokenByPk({
+            id: decodedToken.payload.jti,
+          });
+
+          if (accessToken?.is_active) {
+            return res.code(200)
+              .type('application/json; charset=utf-8')
+              .send({ decodedToken });
+          }
+
+          return res.code(400)
             .type('application/json; charset=utf-8')
-            .send({ decodedToken });
+            .send({
+              error: 'invalid_grant',
+              error_description: 'The given token is either invalid, expired, or revoked',
+            });
         }
 
         return res.code(400)

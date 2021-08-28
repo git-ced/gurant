@@ -24,16 +24,22 @@ SERVER.route({
 
             const { CLIENT } = await import('../../utils/graphql');
 
-            await CLIENT.RevokeOauthAccessToken({
+            const { accessToken } = await CLIENT.GetOauthAccessTokenByPk({
               id: decodedAccessToken.payload.jti,
             });
 
-            res.code(200)
-              .type('application/json; charset=utf-8')
-              .send({
-                status: 'ok',
-                statusCode: 200,
+            if (accessToken?.access_token === query.token) {
+              await CLIENT.RevokeOauthAccessToken({
+                id: decodedAccessToken.payload.jti,
               });
+
+              res.code(200)
+                .type('application/json; charset=utf-8')
+                .send({
+                  status: 'ok',
+                  statusCode: 200,
+                });
+            }
           } catch {
             return res.code(400)
               .type('application/json; charset=utf-8')

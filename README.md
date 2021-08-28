@@ -225,3 +225,7 @@ Verifies and decodes a given [JSON Web Token (JWT)](https://datatracker.ietf.org
 | property  | type   | description                    |
 | --------- | ------ | ------------------------------ |
 | `decoded` | object | the value of the decoded token |
+
+# TODO
+
+- Add tests :')

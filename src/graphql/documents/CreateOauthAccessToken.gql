@@ -6,6 +6,8 @@ mutation CreateOauthAccessToken(
   $expiresIn: numeric!,
   $scope: _text,
   $tokenType: String!,
+  $accessToken: String!,
+  $refreshToken: String!,
 ) {
   accessToken: insert_oauth_access_tokens_one(
     object: {
@@ -17,10 +19,12 @@ mutation CreateOauthAccessToken(
       scope: $scope,
       token_type: $tokenType,
       is_active: true,
+      access_token: $accessToken,
+      refresh_token: $refreshToken,
     },
     on_conflict: {
       constraint: oauth_access_tokens_pkey,
-      update_columns: [id, created_at, expires_in, scope, token_type, client_id, is_active, user_id]
+      update_columns: [id, created_at, expires_in, scope, token_type, client_id, is_active, user_id, access_token, refresh_token]
     }
   ) {
     id
@@ -32,5 +36,7 @@ mutation CreateOauthAccessToken(
     scope
     token_type
     is_active
+    access_token
+    refresh_token
   }
 }

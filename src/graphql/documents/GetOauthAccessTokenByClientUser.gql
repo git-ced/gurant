@@ -17,5 +17,7 @@ query GetOauthAccessTokenByClientUser(
     scope
     token_type
     is_active
+    access_token
+    refresh_token
   }
 }

@@ -16,7 +16,10 @@ SERVER.route({
 
       if (query.token_type_hint === 'access_token') {
         try {
-          const decodedAccessToken = await verifyAccessToken(query.token, credentials.client_id);
+          const decodedAccessToken = await verifyAccessToken(
+            query.token,
+            credentials.client_id,
+          );
 
           const { CLIENT } = await import('../../utils/graphql');
 

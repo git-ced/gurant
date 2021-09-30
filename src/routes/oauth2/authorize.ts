@@ -8,7 +8,7 @@ import {
 // ANCHOR SERVER
 import SERVER from '../../server';
 
-import { getUserFromAuthorization } from '../../functions/auth';
+import { getUserFromAuthorization } from '../../controllers/auth';
 import { AuthorizationQueryInterface } from '../../utils/types';
 import { composeRedirectURI } from '../../functions/compose';
 import { encrypt } from '../../functions/encryption';

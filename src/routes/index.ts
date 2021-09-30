@@ -8,7 +8,7 @@ import ECDSA from 'ecdsa-secp256r1';
 import SERVER from '../server';
 
 // ANCHOR Utils
-import { parseClientCredentials } from '../functions/auth';
+import { getBasicCredentials } from '../functions/auth';
 import {
   verifyAccessToken,
   verifyRefreshToken,
@@ -57,7 +57,7 @@ if (process.env.NODE_ENV === 'development') {
     url: '/verify-token',
     handler: async (req, res) => {
       const query = req.query as VerifyTokenQueryInterface;
-      const credentials = parseClientCredentials(req.headers.authorization);
+      const credentials = getBasicCredentials(req.headers.authorization);
 
       if (credentials) {
         if (query.token_type_hint === 'access_token') {

@@ -1,7 +1,7 @@
 // ANCHOR SERVER
 import SERVER from '../../server';
 
-import { parseClientCredentials } from '../../functions/auth';
+import { getBasicCredentials } from '../../functions/auth';
 import { verifyAccessToken } from '../../functions/jwt';
 import { RevokeQueryInterface } from '../../utils/types';
 
@@ -9,7 +9,7 @@ SERVER.route({
   method: 'POST',
   url: '/oauth2/revoke',
   handler: async (req, res) => {
-    const credentials = parseClientCredentials(req.headers.authorization);
+    const credentials = getBasicCredentials(req.headers.authorization);
 
     if (credentials) {
       const query = req.query as RevokeQueryInterface;

@@ -9,7 +9,7 @@ import {
 import SERVER from '../server';
 
 import { CreateUserPayloadInterface, UpdateClientParamsInterface } from '../utils/types';
-import { getUserFromAuthorization } from '../functions/auth';
+import { getUserFromAuthorization } from '../controllers/auth';
 import { encrypt } from '../functions/encryption';
 
 SERVER.route({

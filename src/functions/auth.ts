@@ -1,12 +1,5 @@
-// ANCHOR Firebase
-import { auth } from 'firebase-admin';
-
-// ANCHOR UUID
-import { v5 as uuidv5 } from 'uuid';
-
-import { firebaseAuth } from '../utils/firebase';
+// ANCHOR Utils
 import { base64ToString } from './convert';
-import { decrypt } from './encryption';
 
 export const removeKeyPrefix = (key: string): string => key
   .replace('pk_', '')
@@ -14,26 +7,12 @@ export const removeKeyPrefix = (key: string): string => key
   .replace('live_', '')
   .replace('test_', '');
 
-export const isSecretValid = (
-  clientId: string,
-  clientSecret: string,
-  userId: string,
-): boolean => {
-  const parsedClientId = removeKeyPrefix(clientId);
-  const parsedClientSecret = removeKeyPrefix(clientSecret);
-  const decryptedClientId = decrypt(parsedClientId);
-  const decryptedClientSecret = decrypt(parsedClientSecret);
-
-  const clientSecretReference = uuidv5(userId, decryptedClientId);
-
-  return decryptedClientSecret === clientSecretReference;
-};
 interface ClientCredentialsInterface {
   client_id: string;
   client_secret: string;
 }
 
-export const parseClientCredentials = (
+export const getBasicCredentials = (
   authorization?: string,
 ): ClientCredentialsInterface | null => {
   if (!authorization || !authorization.includes('Basic ')) {
@@ -54,19 +33,12 @@ export const parseClientCredentials = (
   };
 };
 
-export const getUserFromAuthorization = async (
+export const getAuthBearerToken = (
   authorization?: string,
-): Promise<auth.UserRecord | null> => {
+): string | null => {
   if (!authorization || !authorization.includes('Bearer ')) {
     return null;
   }
 
-  const bearerToken = authorization.replace('Bearer ', '');
-  const decodedIDToken = await firebaseAuth.verifyIdToken(bearerToken);
-
-  const userId = decodedIDToken.uid;
-
-  const user = await firebaseAuth.getUser(userId);
-
-  return user;
+  return authorization.replace('Bearer ', '');
 };
